@@ -14,8 +14,27 @@ function expressionCalculator(expr) {
             1: ['*', '/'],
             2: ['+', '-']
         }
-        // делаем операцию
+        // делаем проверки на ошибки
     
+        if (/\/\s{0,1}0/.test(expr))
+         throw new Error('TypeError: Division by zero.');
+    
+         let openBr = 0;
+         let closeBr = 0;
+    
+         for (let elem of expr)
+         {
+             if (elem == '(')
+             openBr++;
+             if (elem == ')')
+             closeBr++;
+         }
+    
+         if (openBr != closeBr)
+         throw new Error('ExpressionError: Brackets must be paired');
+    
+    
+         // операции +-*.
         function doOper(num1,num2, operator)
         {
     
@@ -35,7 +54,6 @@ function expressionCalculator(expr) {
             }
         }
     
-        console.log(doOper(2,5, '*'));
     
        // проверка приоритета
         function priorityComparison(str1, str2current)
